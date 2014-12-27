@@ -1,4 +1,4 @@
-primefaces-reflection-column-model
-==================================
+primefaces-reflection-crud
+==========================
 
-A Dynamic Column Model for PrimeFaces DataTable, created using reflection
+Primefaces Crud example using Java reflection

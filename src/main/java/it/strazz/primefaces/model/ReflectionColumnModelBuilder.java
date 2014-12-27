@@ -15,7 +15,7 @@ import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.PredicateUtils;
 import org.apache.commons.lang3.StringUtils;
 
-public class ColumnDescriptorModelBuilder {
+public class ReflectionColumnModelBuilder {
 	private static Set<String> defaultExcludedProperties = new HashSet<String>(0);
 	private Class modelClass;
 	private Comparator<PropertyDescriptor> propertySortComparator;
@@ -25,12 +25,12 @@ public class ColumnDescriptorModelBuilder {
 		defaultExcludedProperties.add("class");
 	}
 	
-	public ColumnDescriptorModelBuilder(Class modelClass) {
+	public ReflectionColumnModelBuilder(Class modelClass) {
 		this.modelClass = modelClass;
 	}
 	
-	public List<ColumnDescriptor> build(){
-		List<ColumnDescriptor> columns = new ArrayList<ColumnDescriptor>(0);
+	public List<ColumnModel> build(){
+		List<ColumnModel> columns = new ArrayList<ColumnModel>(0);
 		
 		List<PropertyDescriptor> propertyDescriptors = new ArrayList<PropertyDescriptor>(Arrays.asList(PropertyUtils.getPropertyDescriptors(modelClass)));
 		
@@ -46,9 +46,10 @@ public class ColumnDescriptorModelBuilder {
 		}	
 		
 		for (PropertyDescriptor propertyDescriptor : propertyDescriptors) {
-			ColumnDescriptor columnDescriptor = new ColumnDescriptor();
+			ColumnModel columnDescriptor = new ColumnModel();
 			columnDescriptor.setProperty(propertyDescriptor.getName());
 			columnDescriptor.setHeader(StringUtils.capitalize(StringUtils.join(StringUtils.splitByCharacterTypeCamelCase(propertyDescriptor.getName())," ")));
+			columnDescriptor.setType(propertyDescriptor.getPropertyType());
 			columns.add(columnDescriptor);
 		}
 		

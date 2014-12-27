@@ -2,12 +2,13 @@ package it.strazz.primefaces.model;
 
 import java.io.Serializable;
 
-public class ColumnDescriptor implements Serializable {
+public class ColumnModel implements Serializable {
 	
 	private String property;
 	private String header;
+	private Class<?> type;
 	
-	public ColumnDescriptor() {}
+	public ColumnModel() {}
 	
 	public String getProperty() {
 		return property;
@@ -20,6 +21,14 @@ public class ColumnDescriptor implements Serializable {
 	}
 	public void setHeader(String header) {
 		this.header = header;
+	}
+
+	public Class<?> getType() {
+		return type;
+	}
+
+	public void setType(Class<?> type) {
+		this.type = type;
 	}
 
 }

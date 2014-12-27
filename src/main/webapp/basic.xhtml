@@ -10,10 +10,14 @@
 <h:head>
 </h:head>
 <h:body>
-	<h:form>
-		<p:menubar>
-	        <p:menuitem value="Basic" action="basic"/>
-	    </p:menubar>
-    </h:form>
+	<p:dataTable var="person" value="#{basicExampleBean.people}">
+		<p:columns 
+			value="#{basicExampleBean.columns}" 
+			var="column"
+			headerText="#{column.header}">
+			<h:outputText value="#{person[column.property]}" />
+		</p:columns>
+	</p:dataTable>
+
 </h:body>
 </html>

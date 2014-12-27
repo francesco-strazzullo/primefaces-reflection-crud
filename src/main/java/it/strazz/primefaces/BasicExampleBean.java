@@ -1,28 +1,30 @@
 package it.strazz.primefaces;
 
-import it.strazz.primefaces.model.ColumnDescriptor;
-import it.strazz.primefaces.model.ColumnDescriptorModelBuilder;
+import it.strazz.primefaces.model.ReflectionColumnModelBuilder;
+import it.strazz.primefaces.model.ColumnModel;
 import it.strazz.primefaces.model.Person;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
 @ManagedBean
 @ViewScoped
-public class TableBean implements Serializable{
+public class BasicExampleBean implements Serializable{
 	
 	private List<Person> people = new ArrayList<Person>(0);
-	private List<ColumnDescriptor> columns = new ArrayList<ColumnDescriptor>(0);
+	private List<ColumnModel> columns = new ArrayList<ColumnModel>(0);
 	
-	public TableBean() {
+	@PostConstruct
+	public void init() {
 		people.add(new Person("Francesco", "Strazzullo", 28));
 		people.add(new Person("Maria", "Strazzullo", 22));
 		
-		columns = new ColumnDescriptorModelBuilder(Person.class).build();
+		columns = new ReflectionColumnModelBuilder(Person.class).build();
 	}
 	
 	public List<Person> getPeople() {
@@ -33,11 +35,11 @@ public class TableBean implements Serializable{
 		this.people = people;
 	}
 
-	public List<ColumnDescriptor> getColumns() {
+	public List<ColumnModel> getColumns() {
 		return columns;
 	}
 
-	public void setColumns(List<ColumnDescriptor> columns) {
+	public void setColumns(List<ColumnModel> columns) {
 		this.columns = columns;
 	}
 }
