@@ -1,4 +1,4 @@
-package it.strazz.primefaces.model;
+package it.strazz.primefaces.columns;
 
 import java.io.Serializable;
 
