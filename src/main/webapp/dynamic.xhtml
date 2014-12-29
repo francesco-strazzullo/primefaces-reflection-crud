@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+</h:head>
+<h:body>
+	<h:form>
+		<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+	        <p:outputLabel for="currentClass" value="Class:" />
+	        <p:selectOneRadio id="currentClass" value="#{dynamicExampleBean.currentClass}">
+	            <f:selectItem itemLabel="User" itemValue="it.strazz.primefaces.model.User" />
+	            <f:selectItem itemLabel="Car" itemValue="it.strazz.primefaces.model.Car" />
+	            <p:ajax listener="#{dynamicExampleBean.onChangeClass}" update="@form"/>
+	        </p:selectOneRadio>
+	    </h:panelGrid>
+		<p:dataTable var="obj" value="#{dynamicExampleBean.data}">
+			<p:columns 
+				value="#{dynamicExampleBean.columns}" 
+				var="column"
+				headerText="#{column.header}">
+				<p:selectBooleanCheckbox 
+					value="#{obj[column.property]}" 
+					disabled="true"
+					rendered="#{column.type.toString() == 'boolean'}"/>
+				<h:outputText value="#{obj[column.property]}" rendered="#{column.type.toString() != 'boolean'}" />
+			</p:columns>
+		</p:dataTable>
+	</h:form>
+</h:body>
+</html>
