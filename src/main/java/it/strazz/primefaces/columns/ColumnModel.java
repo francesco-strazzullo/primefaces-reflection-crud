@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 public class ColumnModel implements Serializable {
 	
+	private static final long serialVersionUID = 1L;
+	
 	private String property;
 	private String header;
 	private Class<?> type;
@@ -30,5 +32,4 @@ public class ColumnModel implements Serializable {
 	public void setType(Class<?> type) {
 		this.type = type;
 	}
-
 }
