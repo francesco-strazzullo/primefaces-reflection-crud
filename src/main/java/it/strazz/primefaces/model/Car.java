@@ -27,9 +27,7 @@ public class Car implements Serializable{
 		cars.add(new Car(1, "Audi","Silver",1987,false));
 		cars.add(new Car(1, "Renault","White",1963,true));
 		cars.add(new Car(1, "Volkswagen","Black",1985,true));
-	}
-
-	
+	}	
 
 	public Car(Integer id, String brand, String color, Integer year, boolean used) {
 		super();

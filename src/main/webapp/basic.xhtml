@@ -10,14 +10,13 @@
 <h:head>
 </h:head>
 <h:body>
-	<p:dataTable var="person" value="#{basicExampleBean.users}">
+	<p:dataTable var="user" value="#{basicExampleBean.users}">
 		<p:columns 
 			value="#{basicExampleBean.columns}" 
 			var="column"
 			headerText="#{column.header}">
-			<h:outputText value="#{person[column.property]}" />
+			<h:outputText value="#{user[column.property]}" />
 		</p:columns>
 	</p:dataTable>
-
 </h:body>
 </html>

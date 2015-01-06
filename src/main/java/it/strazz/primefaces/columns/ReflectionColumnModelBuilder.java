@@ -88,11 +88,6 @@ public class ReflectionColumnModelBuilder {
 			columns.add(columnDescriptor);
 		}
 		
-		
-		
 		return columns;
-		
 	}
-	
-	
 }
