@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+<h:head>
+</h:head>
+<f:metadata>
+	<f:viewParam name="class" value="#{basicDetailExampleBean.currentClass}"></f:viewParam>
+	<f:viewParam name="id" value="#{basicDetailExampleBean.id}" converter="javax.faces.Integer"></f:viewParam>
+	<f:event listener="#{basicDetailExampleBean.onPreRender}" type="preRenderView"></f:event>
+</f:metadata>
+<h:body>
+	<h:panelGroup id="dynaFormGroup">
+    <p:messages id="messages" showSummary="true"/>
+
+    <pe:dynaForm id="dynaForm" value="#{basicDetailExampleBean.formModel}" var="data">
+        <pe:dynaFormControl type="text" for="txt">
+            <p:inputText id="txt" value="#{data.value}" required="#{data.required}"/>
+        </pe:dynaFormControl>
+        <pe:dynaFormControl type="textarea" for="tarea">
+            <p:inputTextarea id="tarea" value="#{data.value}" required="#{data.required}" autoResize="false"/>
+        </pe:dynaFormControl>
+        <pe:dynaFormControl type="boolean" for="boolean">
+           	<p:selectBooleanCheckbox value="#{data.value}"/>
+        </pe:dynaFormControl>
+    </pe:dynaForm>
+</h:panelGroup>
+</h:body>
+</html>

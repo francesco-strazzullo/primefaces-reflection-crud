@@ -15,6 +15,14 @@
 </f:metadata>
 <h:body>
 	<p:dataTable var="obj" value="#{viewParamExampleBean.data}">
+		<p:column>
+			<h:outputLink 
+				value="basicDetail.xhtml?faces-redirect=true">
+					Edit
+					<f:param name="id" value="#{obj.id}"/>
+					<f:param name="class" value="#{viewParamExampleBean.currentClass}"/>
+			</h:outputLink>
+		</p:column>
 		<p:columns 
 			value="#{viewParamExampleBean.columns}" 
 			var="column"
