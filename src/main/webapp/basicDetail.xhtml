@@ -15,20 +15,20 @@
 	<f:event listener="#{basicDetailExampleBean.onPreRender}" type="preRenderView"></f:event>
 </f:metadata>
 <h:body>
-	<h:panelGroup id="dynaFormGroup">
-    <p:messages id="messages" showSummary="true"/>
-
-    <pe:dynaForm id="dynaForm" value="#{basicDetailExampleBean.formModel}" var="data">
-        <pe:dynaFormControl type="text" for="txt">
-            <p:inputText id="txt" value="#{data.value}" required="#{data.required}"/>
-        </pe:dynaFormControl>
-        <pe:dynaFormControl type="textarea" for="tarea">
-            <p:inputTextarea id="tarea" value="#{data.value}" required="#{data.required}" autoResize="false"/>
-        </pe:dynaFormControl>
-        <pe:dynaFormControl type="boolean" for="boolean">
-           	<p:selectBooleanCheckbox value="#{data.value}"/>
-        </pe:dynaFormControl>
-    </pe:dynaForm>
-</h:panelGroup>
+	<h:form>
+		<p:messages id="messages" showSummary="true"/>
+	
+	    <pe:dynaForm id="dynaForm" value="#{basicDetailExampleBean.formModel}" var="data">
+	        <pe:dynaFormControl type="text" for="txt">
+	            <p:inputText id="txt" value="#{data.value}"/>
+	        </pe:dynaFormControl>
+	        <pe:dynaFormControl type="textarea" for="tarea">
+	            <p:inputTextarea id="tarea" value="#{data.value}" autoResize="false"/>
+	        </pe:dynaFormControl>
+	        <pe:dynaFormControl type="boolean" for="boolean">
+	           	<p:selectBooleanCheckbox value="#{data.value}"/>
+	        </pe:dynaFormControl>
+	    </pe:dynaForm>
+    </h:form>
 </h:body>
 </html>
