@@ -4,7 +4,6 @@ import it.strazz.primefaces.detail.ReflectionDynaFormModelBuilder;
 import it.strazz.primefaces.model.User;
 
 import java.io.Serializable;
-import java.lang.reflect.InvocationTargetException;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -19,17 +18,41 @@ public class BasicDetailExampleBean implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private Object model;
-	private String currentClass = User.class.getName();
+	private Class currentClass;
+	private String currentClassName;
 	private Integer id;
-	private Boolean disabled;
+	private Boolean disabled = false;
 	private DynaFormModel formModel;
 	
-	public String getCurrentClass() {
-		return currentClass;
+	public void onPreRender(){
+		try {
+			currentClass = Class.forName(currentClassName);
+			this.formModel = new ReflectionDynaFormModelBuilder(currentClass).setExcludedProperties("id").build();
+			if(id != null){
+				this.model = MethodUtils.invokeExactStaticMethod(currentClass, "get", new Object[]{id});
+			}else{
+				this.model = currentClass.newInstance();
+			}
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
+	public String save(){
+		try {
+			MethodUtils.invokeExactStaticMethod(currentClass, "store", new Object[]{this.model});
+			return "param.xhtml?class=" + currentClassName + "&faces-redirect=true";
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
+	public String getCurrentClassName() {
+		return currentClassName;
 	}
 
-	public void setCurrentClass(String currentClass) {
-		this.currentClass = currentClass;
+	public void setCurrentClassName(String currentClass) {
+		this.currentClassName = currentClass;
 	}
 
 	public Integer getId() {
@@ -46,17 +69,6 @@ public class BasicDetailExampleBean implements Serializable{
 
 	public void setDisabled(Boolean disabled) {
 		this.disabled = disabled;
-	}
-
-	public void onPreRender(){
-		try {
-			Class<?> toLoadClass = Class.forName(currentClass);
-			this.model = MethodUtils.invokeExactStaticMethod(toLoadClass, "get", new Object[]{id});
-			this.formModel = new ReflectionDynaFormModelBuilder(toLoadClass).build();
-			
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
 	}
 
 	public Object getModel() {

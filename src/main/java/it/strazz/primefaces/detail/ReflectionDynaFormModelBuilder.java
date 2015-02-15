@@ -5,8 +5,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.beanutils.PropertyUtils;
@@ -19,6 +21,7 @@ import org.primefaces.extensions.model.dynaform.DynaFormModel;
 import org.primefaces.extensions.model.dynaform.DynaFormRow;
 
 public class ReflectionDynaFormModelBuilder {
+	
 	private Class modelClass;
 	private Comparator<PropertyDescriptor> propertySortComparator;
 	private Predicate propertyFilterPredicate;
@@ -83,9 +86,9 @@ public class ReflectionDynaFormModelBuilder {
 		
 		for (PropertyDescriptor propertyDescriptor : propertyDescriptors) {
 			DynaFormRow row = formModel.createRegularRow();  
-			  
-	        DynaFormLabel label = row.addLabel(propertyDescriptor.getName());
-	        DynaFormControl input = row.addControl(new DynaPropertyModel("Publisher",null), "text");  
+			
+			DynaFormLabel label = row.addLabel(propertyDescriptor.getName());
+	        DynaFormControl input = row.addControl(new DynaPropertyModel(propertyDescriptor.getName()), propertyDescriptor.getPropertyType().getSimpleName().toLowerCase());  
 	        label.setForControl(input);  
 		}
 		

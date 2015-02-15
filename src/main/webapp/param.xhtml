@@ -14,12 +14,26 @@
 	<f:event listener="#{viewParamExampleBean.onPreRender}" type="preRenderView"></f:event>
 </f:metadata>
 <h:body>
+	<h:outputLink 
+		value="basicDetail.xhtml?faces-redirect=true">
+			Create
+			<f:param name="class" value="#{viewParamExampleBean.currentClass}"/>
+	</h:outputLink>
 	<p:dataTable var="obj" value="#{viewParamExampleBean.data}">
 		<p:column>
 			<h:outputLink 
 				value="basicDetail.xhtml?faces-redirect=true">
 					Edit
 					<f:param name="id" value="#{obj.id}"/>
+					<f:param name="class" value="#{viewParamExampleBean.currentClass}"/>
+			</h:outputLink>
+		</p:column>
+		<p:column>
+			<h:outputLink 
+				value="basicDetail.xhtml?faces-redirect=true">
+					View
+					<f:param name="id" value="#{obj.id}"/>
+					<f:param name="disabled" value="true"/>
 					<f:param name="class" value="#{viewParamExampleBean.currentClass}"/>
 			</h:outputLink>
 		</p:column>

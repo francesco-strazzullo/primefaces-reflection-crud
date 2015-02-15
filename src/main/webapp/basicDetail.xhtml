@@ -10,25 +10,42 @@
 <h:head>
 </h:head>
 <f:metadata>
-	<f:viewParam name="class" value="#{basicDetailExampleBean.currentClass}"></f:viewParam>
+	<f:viewParam name="class" value="#{basicDetailExampleBean.currentClassName}"></f:viewParam>
 	<f:viewParam name="id" value="#{basicDetailExampleBean.id}" converter="javax.faces.Integer"></f:viewParam>
+	<f:viewParam name="disabled" value="#{basicDetailExampleBean.disabled}" converter="javax.faces.Boolean"></f:viewParam>
 	<f:event listener="#{basicDetailExampleBean.onPreRender}" type="preRenderView"></f:event>
 </f:metadata>
 <h:body>
 	<h:form>
 		<p:messages id="messages" showSummary="true"/>
-	
+		
 	    <pe:dynaForm id="dynaForm" value="#{basicDetailExampleBean.formModel}" var="data">
-	        <pe:dynaFormControl type="text" for="txt">
-	            <p:inputText id="txt" value="#{data.value}"/>
-	        </pe:dynaFormControl>
-	        <pe:dynaFormControl type="textarea" for="tarea">
-	            <p:inputTextarea id="tarea" value="#{data.value}" autoResize="false"/>
+	        <pe:dynaFormControl type="string" for="txt">
+	        	<p:inputText 
+	        		id="txt" 
+	        		value="#{basicDetailExampleBean.model[data.name]}"
+	        		disabled="#{basicDetailExampleBean.disabled}"/>
 	        </pe:dynaFormControl>
 	        <pe:dynaFormControl type="boolean" for="boolean">
-	           	<p:selectBooleanCheckbox value="#{data.value}"/>
+	           	<p:selectBooleanCheckbox 
+	           		id="boolean" 
+	           		value="#{basicDetailExampleBean.model[data.name]}"
+	           		disabled="#{basicDetailExampleBean.disabled}"/>
+	        </pe:dynaFormControl>
+	        <pe:dynaFormControl type="integer" for="integer">
+	           	<p:inputText 
+	           		id="integer" 
+	           		value="#{basicDetailExampleBean.model[data.name]}" 
+	           		converter="javax.faces.Integer"
+	           		disabled="#{basicDetailExampleBean.disabled}"/>
 	        </pe:dynaFormControl>
 	    </pe:dynaForm>
+	    
+	    <p:commandButton
+	    	process="@form"
+	    	value="Save" 
+	    	disabled="#{basicDetailExampleBean.disabled}"
+	    	action="#{basicDetailExampleBean.save}"/>
     </h:form>
 </h:body>
 </html>

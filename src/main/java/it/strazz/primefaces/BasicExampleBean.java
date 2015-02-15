@@ -16,6 +16,8 @@ import javax.faces.bean.ViewScoped;
 @ViewScoped
 public class BasicExampleBean implements Serializable{
 	
+	private static final long serialVersionUID = 1L;
+	
 	private List<ColumnModel> columns = new ArrayList<ColumnModel>(0);
 	
 	@PostConstruct

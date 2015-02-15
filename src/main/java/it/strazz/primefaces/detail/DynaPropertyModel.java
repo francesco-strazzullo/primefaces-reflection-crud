@@ -6,15 +6,13 @@ public class DynaPropertyModel implements Serializable{
     
 	private static final long serialVersionUID = 1L;
 	
-	private String name;  
-    private Object value;
+	private String name;
     
     public DynaPropertyModel() {}
     
-    public DynaPropertyModel(String name, Object value) {
+    public DynaPropertyModel(String name) {
 		super();
 		this.name = name;
-		this.value = value;
 	}
     
 	public String getName() {
@@ -22,11 +20,5 @@ public class DynaPropertyModel implements Serializable{
 	}
 	public void setName(String name) {
 		this.name = name;
-	}
-	public Object getValue() {
-		return value;
-	}
-	public void setValue(Object value) {
-		this.value = value;
 	}
 }
