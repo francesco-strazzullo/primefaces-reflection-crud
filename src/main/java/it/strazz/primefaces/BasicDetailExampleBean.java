@@ -1,9 +1,13 @@
 package it.strazz.primefaces;
 
+import it.strazz.primefaces.detail.FormControlBuilder;
 import it.strazz.primefaces.detail.ReflectionDynaFormModelBuilder;
-import it.strazz.primefaces.model.User;
 
+import java.beans.PropertyDescriptor;
 import java.io.Serializable;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -24,10 +28,14 @@ public class BasicDetailExampleBean implements Serializable{
 	private Boolean disabled = false;
 	private DynaFormModel formModel;
 	
-	public void onPreRender(){
+	public final void onPreRender(){
 		try {
 			currentClass = Class.forName(currentClassName);
-			this.formModel = new ReflectionDynaFormModelBuilder(currentClass).setExcludedProperties("id").build();
+			this.formModel = new ReflectionDynaFormModelBuilder(currentClass)
+				.setExcludedProperties("id")
+				.setPropertySortComparator(getPropertyComparator())
+				.putCustomBuilders(getCustomBuilders())
+				.build();
 			if(id != null){
 				this.model = MethodUtils.invokeExactStaticMethod(currentClass, "get", new Object[]{id});
 			}else{
@@ -38,7 +46,16 @@ public class BasicDetailExampleBean implements Serializable{
 		}
 	}
 	
-	public String save(){
+	protected Comparator<PropertyDescriptor> getPropertyComparator() {
+		return ReflectionDynaFormModelBuilder.DEFAULT_PROPERTY_COMPARATOR;
+	}
+
+	protected Map<String, FormControlBuilder> getCustomBuilders() {
+		//No Custom
+		return new HashMap<String, FormControlBuilder>(0);
+	}
+
+	public final String save(){
 		try {
 			MethodUtils.invokeExactStaticMethod(currentClass, "store", new Object[]{this.model});
 			return "param.xhtml?class=" + currentClassName + "&faces-redirect=true";

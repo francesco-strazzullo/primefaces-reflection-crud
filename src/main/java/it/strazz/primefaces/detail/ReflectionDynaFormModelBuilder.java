@@ -27,6 +27,12 @@ public class ReflectionDynaFormModelBuilder {
 	private Predicate propertyFilterPredicate;
 	private Set<String> excludedProperties;
 	private static Set<String> defaultExcludedProperties = new HashSet<String>(0);
+	private Map<String,FormControlBuilder> customBuilders = new HashMap<String, FormControlBuilder>();
+	public static Comparator<PropertyDescriptor> DEFAULT_PROPERTY_COMPARATOR = new Comparator<PropertyDescriptor>() {
+		public int compare(PropertyDescriptor o1, PropertyDescriptor o2) {
+			return o1.getName().compareTo(o2.getName());
+		}
+	};
 	
 	static{
 		defaultExcludedProperties.add("class");
@@ -35,11 +41,7 @@ public class ReflectionDynaFormModelBuilder {
 	public ReflectionDynaFormModelBuilder(Class modelClass) {
 		this.modelClass = modelClass;
 		this.propertyFilterPredicate = PredicateUtils.truePredicate();
-		this.propertySortComparator = new Comparator<PropertyDescriptor>() {
-			public int compare(PropertyDescriptor o1, PropertyDescriptor o2) {
-				return o1.getName().compareTo(o2.getName());
-			}
-		};
+		this.propertySortComparator = DEFAULT_PROPERTY_COMPARATOR;
 		this.excludedProperties = new HashSet<String>(0);
 	}
 	
@@ -55,6 +57,16 @@ public class ReflectionDynaFormModelBuilder {
 	
 	public ReflectionDynaFormModelBuilder setExcludedProperties(Set<String> p){
 		this.excludedProperties = p;
+		return this;
+	}
+	
+	public ReflectionDynaFormModelBuilder putCustomBuilder(String name,FormControlBuilder builder){
+		this.customBuilders.put(name, builder);
+		return this;
+	}
+	
+	public ReflectionDynaFormModelBuilder putCustomBuilders(Map<String,FormControlBuilder> builders){
+		this.customBuilders.putAll(builders);
 		return this;
 	}
 	
@@ -86,10 +98,14 @@ public class ReflectionDynaFormModelBuilder {
 		
 		for (PropertyDescriptor propertyDescriptor : propertyDescriptors) {
 			DynaFormRow row = formModel.createRegularRow();  
-			
-			DynaFormLabel label = row.addLabel(propertyDescriptor.getName());
-	        DynaFormControl input = row.addControl(new DynaPropertyModel(propertyDescriptor.getName()), propertyDescriptor.getPropertyType().getSimpleName().toLowerCase());  
-	        label.setForControl(input);  
+			if(customBuilders.containsKey(propertyDescriptor.getName())){
+				customBuilders.get(propertyDescriptor.getName()).populateRow(row);
+			}else{
+				//Default Row
+				DynaFormLabel label = row.addLabel(propertyDescriptor.getName());
+		        DynaFormControl input = row.addControl(new DynaPropertyModel(propertyDescriptor.getName()), propertyDescriptor.getPropertyType().getSimpleName().toLowerCase());  
+		        label.setForControl(input);
+			} 
 		}
 		
 		return formModel;

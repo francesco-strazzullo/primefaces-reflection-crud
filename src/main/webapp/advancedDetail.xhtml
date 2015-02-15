@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+<h:head>
+</h:head>
+<f:metadata>
+	<f:viewParam name="class" value="#{advancedDetailExampleBean.currentClassName}"></f:viewParam>
+	<f:viewParam name="id" value="#{advancedDetailExampleBean.id}" converter="javax.faces.Integer"></f:viewParam>
+	<f:viewParam name="disabled" value="#{advancedDetailExampleBean.disabled}" converter="javax.faces.Boolean"></f:viewParam>
+	<f:event listener="#{advancedDetailExampleBean.onPreRender}" type="preRenderView"></f:event>
+</f:metadata>
+<h:body>
+	<h:form>
+		<p:messages id="messages" showSummary="true"/>
+		
+	    <pe:dynaForm id="dynaForm" value="#{advancedDetailExampleBean.formModel}" var="data">
+	        <pe:dynaFormControl type="string" for="txt">
+	        	<p:inputText 
+	        		id="txt" 
+	        		value="#{advancedDetailExampleBean.model[data.name]}"
+	        		disabled="#{advancedDetailExampleBean.disabled}"/>
+	        </pe:dynaFormControl>
+	        <pe:dynaFormControl type="boolean" for="boolean">
+	           	<p:selectBooleanCheckbox 
+	           		id="boolean" 
+	           		value="#{advancedDetailExampleBean.model[data.name]}"
+	           		disabled="#{advancedDetailExampleBean.disabled}"/>
+	        </pe:dynaFormControl>
+	        <pe:dynaFormControl type="integer" for="integer">
+	           	<p:inputText 
+	           		id="integer" 
+	           		value="#{advancedDetailExampleBean.model[data.name]}" 
+	           		converter="javax.faces.Integer"
+	           		disabled="#{advancedDetailExampleBean.disabled}"/>
+	        </pe:dynaFormControl>
+	        <pe:dynaFormControl type="text" for="text">
+	           	<p:inputTextarea
+	           		id="text" 
+	           		value="#{advancedDetailExampleBean.model[data.name]}" 
+	           		disabled="#{advancedDetailExampleBean.disabled}"/>
+	        </pe:dynaFormControl>
+	    </pe:dynaForm>
+    </h:form>
+</h:body>
+</html>

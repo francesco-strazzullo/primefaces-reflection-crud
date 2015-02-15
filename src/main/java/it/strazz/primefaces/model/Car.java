@@ -19,25 +19,31 @@ public class Car implements Serializable{
 	private String brand;
 	private String color;
 	private Integer year;
+	private String notes;
 	private boolean used;
 	
 	static{
-		cars.add(new Car(0, "Honda","Yellow",1995,false));
+		cars.add(new Car(0, "Honda","Yellow",1995,false,"Broken Brakes"));
 		cars.add(new Car(1, "Volvo","Black",1973,true));
 		cars.add(new Car(1, "Audi","Silver",1987,false));
 		cars.add(new Car(1, "Renault","White",1963,true));
 		cars.add(new Car(1, "Volkswagen","Black",1985,true));
 	}	
 
-	public Car(Integer id, String brand, String color, Integer year, boolean used) {
+	public Car(Integer id, String brand, String color, Integer year, boolean used,String notes) {
 		super();
 		this.id = id;
 		this.brand = brand;
 		this.color = color;
 		this.year = year;
 		this.used = used;
+		this.notes = notes;
 	}
-
+	
+	public Car(Integer id, String brand, String color, Integer year, boolean used) {
+		this(id,brand,color,year,used,"");
+	}
+	
 	public Car() {}
 
 	public Integer getId() {
@@ -78,6 +84,14 @@ public class Car implements Serializable{
 
 	public void setUsed(boolean used) {
 		this.used = used;
+	}
+
+	public String getNotes() {
+		return notes;
+	}
+
+	public void setNotes(String notes) {
+		this.notes = notes;
 	}
 
 	public static List<Car> getAll(){
