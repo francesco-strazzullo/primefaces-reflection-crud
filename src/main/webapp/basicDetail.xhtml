@@ -39,6 +39,12 @@
 	           		converter="javax.faces.Integer"
 	           		disabled="#{basicDetailExampleBean.disabled}"/>
 	        </pe:dynaFormControl>
+	        <pe:dynaFormControl type="text" for="text">
+	           	<p:inputTextarea
+	           		id="text" 
+	           		value="#{basicDetailExampleBean.model[data.name]}" 
+	           		disabled="#{basicDetailExampleBean.disabled}"/>
+	        </pe:dynaFormControl>
 	    </pe:dynaForm>
 	    
 	    <p:commandButton
